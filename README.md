@@ -1,6 +1,6 @@
 ## functional-fortran
 
-Functional programming for modern Fortran. 
+Functional programming for modern Fortran.
 
 [![Build Status](https://travis-ci.org/wavebitscientific/functional-fortran.svg?branch=master)](https://travis-ci.org/wavebitscientific/functional-fortran)
 [![GitHub issues](https://img.shields.io/github/issues/wavebitscientific/functional-fortran.svg)](https://github.com/wavebitscientific/functional-fortran/issues)
@@ -23,6 +23,13 @@ cmake ..
 make
 ctest
 ```
+
+```
+cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=F:\SLib\Library\Intel\functional_fortran -G "NMake Makefiles" ..
+cmake --build . --config Release --target install
+ctest -C Release --output-on-failure --timeout 100
+```
+
 Start using functional-fortran in your code by including the module:
 
 ```
@@ -33,7 +40,7 @@ use mod_functional
 
 While not designed as a purely functional programming language,
 modern Fortran goes a long way by letting the programmer
-use `pure` functions to encourage good functional discipline, 
+use `pure` functions to encourage good functional discipline,
 express code in mathematical form, and minimize bug-prone mutable state.
 This library provides a set of commonly used tools in functional
 programming, with the purpose to help Fortran programmers
@@ -71,14 +78,14 @@ All of the above functions are compatible with the standard Fortran 2008 kinds:
 `int8`, `int16`, `int32`, `int64`, `real32`, `real64`, `real128`,
 `complex(real32)`, `complex(real64)`, and `complex(real128)`.
 
-Further, these functions (and their corresponding operators) 
+Further, these functions (and their corresponding operators)
 are compatible with character strings:
-`complement`, `empty`, `head`, `init`, `intersection`, `insert`, 
+`complement`, `empty`, `head`, `init`, `intersection`, `insert`,
 `last`, `reverse`, `set`, `sort`, `split`, `tail`, and `union`.
 
-Functions that operate on one or two arguments are also available as 
+Functions that operate on one or two arguments are also available as
 unary or binary operators, respectively. These are:
-`.complement.`, `.head.`, `.init.`, `.intersection.`, `.last.`, 
+`.complement.`, `.head.`, `.init.`, `.intersection.`, `.last.`,
 `.reverse.`, `.set.`, `.sort.`, `.tail.`, and `.union.`.
 
 ## Example usage
@@ -112,7 +119,7 @@ Negative increments work as expected:
 
 ```fortran
 write(*,*)arange(3,1,-1)
-           3           2           1 
+           3           2           1
 ```
 
 We can use floating-point increments:
@@ -272,7 +279,7 @@ write(*,*)map(fibonacci,[17,5,13,22])
 ```
 
 `filter` returns array elements that satisfy a logical filtering function.
-For example, we can define a function that returns .true. when input is an 
+For example, we can define a function that returns .true. when input is an
 even number, and use this function to filter an array:
 
 ```fortran
@@ -309,8 +316,8 @@ pure real function mult(x,y)
   mult = x*y
 endfunction mult
 ```
-We can then calculate the `sum` and `product` of an array by "folding" the 
-input using the above-defined functions and a start value 
+We can then calculate the `sum` and `product` of an array by "folding" the
+input using the above-defined functions and a start value
 (second argument to `fold*`):
 
 ```fortran
@@ -329,10 +336,10 @@ whenever possible.
 `foldl`, `foldr`, and `foldt` return the same result if the user-defined
 function is associative. See the [Wikipedia page on fold](https://en.wikipedia.org/wiki/Fold_(higher-order_function)) for more information.
 `iterfold` is an iterative (non-recursive) implementation of `foldl`
-that is provided for reference. 
+that is provided for reference.
 
 Opposite to `fold*`, `unfold` can be used to generate an array
-based on a start value `x`, and a function `f`, such that 
+based on a start value `x`, and a function `f`, such that
 the resulting array equals `[x, f(x), f(f(x)), f(f(f(x))), ... ]`.
 For example:
 
@@ -343,7 +350,7 @@ pure real function multpt1(x)
 endfunction multpt1
 
 write(*,*)unfold(multpt1,[1.],5)
-   1.00000000       1.10000002       1.21000004       1.33100009       1.46410012 
+   1.00000000       1.10000002       1.21000004       1.33100009       1.46410012
 ```
 
 ### Set functions: `set`, `union`, `intersection`, `complement`
@@ -354,7 +361,7 @@ Function `set` returns all unique elements of an input array:
 write(*,*)set([1,1,2,2,3])
            1           2           3
 ```
-Common functions that operate on sets, `union`, 
+Common functions that operate on sets, `union`,
 `intersection`, and `complement`,  are also available:
 
 ```fortran
@@ -373,7 +380,7 @@ write(*,*)complement([1,2,2],[2,3,3,4])
 
 ## Contributing
 
-Please submit a bug report or a request for new feature 
+Please submit a bug report or a request for new feature
 [here](https://github.com/wavebitscientific/functional-fortran/issues/new).
 
 ## Further reading

@@ -21,9 +21,15 @@ endif()
 
 # compiler flags for ifort
 if(CMAKE_Fortran_COMPILER_ID MATCHES Intel)
-  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -assume realloc_lhs -heap-arrays")
-  set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g -C -traceback")
-  set(CMAKE_Fortran_FLAGS_RELEASE "-O3")
+  if (WIN32)
+    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /heap-arrays")
+    set(CMAKE_Fortran_FLAGS_DEBUG "/Od /traceback")
+    set(CMAKE_Fortran_FLAGS_RELEASE "/O3 /QxHost")
+  else (WIN32)
+    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -assume realloc_lhs -heap-arrays")
+    set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g -C -traceback")
+    set(CMAKE_Fortran_FLAGS_RELEASE "-O3")
+  endif (WIN32)
 endif()
 
 # compiler flags for Cray ftn
